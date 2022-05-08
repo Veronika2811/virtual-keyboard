@@ -80,4 +80,4 @@ const rows = [
 
 const lang = get('kbLang', '"ru"');
 
-new Keyboard(lang, rows).init(lang).generateButton().generateRows();// .render()//.generateLayout();
+new Keyboard(rows).init(lang).generateKeyboard();

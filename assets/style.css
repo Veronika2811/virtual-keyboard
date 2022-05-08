@@ -27,7 +27,7 @@ body {
   text-align: center;
 }
 
-.output {
+.textarea {
   width: 100%;
   height: 200px;
   padding: 10px;
@@ -89,6 +89,8 @@ body {
   width: 100%;
   transition: all 0.2s ease;
 }
+
+/* Right button */
 
 [data-code="Backspace"],
 [data-code="Delete"],
@@ -156,6 +158,7 @@ body {
   width: 76px;
 }
 
+/* Active button */
 .active {
   background-color: #d7f2f5;
   border: 1px solid #97c6cc;
