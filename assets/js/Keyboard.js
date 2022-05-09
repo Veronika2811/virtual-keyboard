@@ -1,3 +1,4 @@
+// import * as storage from "./storage.js";
 import { set } from './storage.js';
 import create from './createDomNode.js';
 import language from './languages.js';
@@ -7,7 +8,8 @@ export default class Keyboard {
   constructor(rows) {
     this.rows = rows;
     this.buttons = [];
-    this.rowElement = '';
+    this.isCaps = false;
+    this.isShift = false;
   }
 
   init(langCode) {
@@ -75,8 +77,6 @@ export default class Keyboard {
 
     document.addEventListener('keydown', this.handleEvent);
     document.addEventListener('keyup', this.handleEvent);
-    this.keyboard.addEventListener('mousedown', this.preHandleEvent);
-    this.keyboard.addEventListener('mouseup', this.preHandleEvent);
   }
 
   handleEvent = (event) => {
@@ -87,7 +87,6 @@ export default class Keyboard {
     this.textarea.focus();
 
     const { code, type } = event;
-
     const buttonObject = this.buttons.find((key) => key.code === code);
 
     if (type.match(/keydown|mousedown/)) {
@@ -96,6 +95,25 @@ export default class Keyboard {
       if (type.match(/key/)) {
         event.preventDefault();
       }
+
+      if (code === 'ShiftLeft' || code === 'ShiftRight') {
+        this.shiftKey = true;
+      }
+
+      if (this.shiftKey) {
+        this.changeCharactersKeyboard(true);
+      }
+
+      // Залипание и изменения регистра
+      if (code === 'CapsLock' && !this.isCaps) {
+        this.isCaps = true;
+        this.changeCharactersKeyboard(true);
+      } else if (code === 'CapsLock' && this.isCaps) {
+        this.isCaps = false;
+        this.changeCharactersKeyboard(false);
+        buttonObject.letter.classList.remove('active');
+      }
+
       // Смена языка
       if (code === 'ControlLeft' || code === 'ControlRight') {
         this.keyCtrl = true;
@@ -110,8 +128,25 @@ export default class Keyboard {
       if ((code === 'AltLeft' || code === 'AltRight') && this.keyCtrl) {
         this.switchLanguage();
       }
+
+      // Вывод символов в textarea
+      if (!this.isCaps) {
+        this.printToTextarea(
+          buttonObject,
+          this.shiftKey ? buttonObject.shift : buttonObject.small,
+        );
+      } else if (this.isCaps) {
+        this.printToTextarea(
+          buttonObject,
+          this.shiftKey ? buttonObject.small : buttonObject.shift,
+        );
+      }
     } else if (type.match(/keyup|mouseup/)) {
-      buttonObject.letter.classList.remove('active');
+      if (code === 'ShiftLeft' || code === 'ShiftRight') {
+        this.shiftKey = false;
+        this.changeCharactersKeyboard(false);
+      }
+
       // Смена языка
       if (code === 'ControlLeft' || code === 'ControlRight') {
         this.keyCtrl = false;
@@ -119,8 +154,37 @@ export default class Keyboard {
       if (code === 'AltLeft' || code === 'AltRight') {
         this.keyAlt = false;
       }
+
+      // Отлипание Caps
+      if (!code.match(/Caps/)) buttonObject.letter.classList.remove('active');
     }
   };
+
+  changeCharactersKeyboard(isTrue) {
+    if (isTrue) {
+      this.buttons.forEach((button) => {
+        this.button = button;
+        if (!button.isFnKey && this.isCaps && !this.shiftKey) {
+          this.button.letter.textContent = button.shift;
+        } else if (!button.isFnKey && this.isCaps && this.shiftKey) {
+          this.button.letter.innerHTML = button.small;
+        } else if (!button.isFnKey && !this.isCaps && this.shiftKey) {
+          this.button.letter.innerHTML = button.shift;
+        }
+      });
+    } else {
+      this.buttons.forEach((button) => {
+        if (!button.isFnKey) {
+          this.button = button;
+          if (!this.isCaps) {
+            this.button.letter.textContent = button.small;
+          } else {
+            this.button.letter.textContent = button.shift;
+          }
+        }
+      });
+    }
+  }
 
   switchLanguage() {
     const arrayOfLanguages = Object.keys(language);
@@ -132,7 +196,7 @@ export default class Keyboard {
 
     this.main.dataset.language = arrayOfLanguages[langIndex];
 
-    set('kbLang', arrayOfLanguages[langIndex]);
+    set('currentLang', arrayOfLanguages[langIndex]);
 
     this.buttons.forEach((el) => {
       this.el = el;
@@ -145,5 +209,46 @@ export default class Keyboard {
 
       this.el.letter.textContent = key.small;
     });
+
+    if (this.isCaps) {
+      this.changeCharactersKeyboard(true);
+    }
+  }
+
+  printToTextarea(buttonObject, symbol) {
+    let cursorPosition = this.textarea.selectionStart;
+    const leftSide = this.textarea.value.slice(0, cursorPosition);
+    const rightSide = this.textarea.value.slice(cursorPosition);
+
+    switch (buttonObject.code) {
+      case 'Tab':
+        this.textarea.value = `${leftSide}\t${rightSide}`;
+        cursorPosition += 1;
+        break;
+      case 'Enter':
+        this.textarea.value = `${leftSide}\n${rightSide}`;
+        cursorPosition += 1;
+        break;
+      case 'Delete':
+        this.textarea.value = `${leftSide}${rightSide.slice(1)}`;
+        break;
+      case 'Backspace':
+        this.textarea.value = `${leftSide.slice(0, -1)}${rightSide}`;
+        cursorPosition -= 1;
+        break;
+      case 'Space':
+        this.textarea.value = `${leftSide} ${rightSide}`;
+        cursorPosition += 1;
+        break;
+      default:
+        break;
+    }
+    if (this.printToTextarea[buttonObject.code]) {
+      this.printToTextarea[buttonObject.code]();
+    } else if (!buttonObject.isFnKey) {
+      cursorPosition += 1;
+      this.textarea.value = `${leftSide}${symbol || ''}${rightSide}`;
+    }
+    this.textarea.setSelectionRange(cursorPosition, cursorPosition);
   }
 }

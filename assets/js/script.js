@@ -78,6 +78,6 @@ const rows = [
   ],
 ];
 
-const lang = get('kbLang', '"ru"');
+const lang = get('currentLang', '"ru"');
 
 new Keyboard(rows).init(lang).generateKeyboard();

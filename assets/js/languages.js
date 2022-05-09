@@ -70,11 +70,6 @@ const en = [
     code: 'Backspace',
   },
   {
-    small: 'Delete',
-    shift: null,
-    code: 'Delete',
-  },
-  {
     small: 'Tab',
     shift: null,
     code: 'Tab',
@@ -140,9 +135,14 @@ const en = [
     code: 'BracketRight',
   },
   {
-    small: 'Enter',
+    small: '\\',
+    shift: '|',
+    code: 'Backslash',
+  },
+  {
+    small: 'Delete',
     shift: null,
-    code: 'Enter',
+    code: 'Delete',
   },
   {
     small: 'CapsLock',
@@ -205,19 +205,14 @@ const en = [
     code: 'Quote',
   },
   {
-    small: '\\',
-    shift: '|',
-    code: 'Backslash',
+    small: 'Enter',
+    shift: null,
+    code: 'Enter',
   },
   {
     small: 'Shift',
     shift: null,
     code: 'ShiftLeft',
-  },
-  {
-    small: '<',
-    shift: '>',
-    code: 'IntlBackslash',
   },
   {
     small: 'z',
@@ -270,15 +265,24 @@ const en = [
     code: 'Slash',
   },
   {
+    small: '▲',
+    shift: '▲',
+    code: 'ArrowUp',
+  },
+  {
     small: 'Shift',
     shift: null,
     code: 'ShiftRight',
-    fn: true,
   },
   {
     small: 'Ctrl',
     shift: null,
     code: 'ControlLeft',
+  },
+  {
+    small: 'Win',
+    shift: null,
+    code: 'Win',
   },
   {
     small: 'Alt',
@@ -296,34 +300,24 @@ const en = [
     code: 'AltRight',
   },
   {
-    small: 'Ctrl',
-    shift: null,
-    code: 'ControlRight',
-  },
-  {
     small: '◀',
-    shift: null,
+    shift: '◀',
     code: 'ArrowLeft',
   },
   {
-    small: '▲',
-    shift: null,
-    code: 'ArrowUp',
-  },
-  {
     small: '▼',
-    shift: null,
+    shift: '▼',
     code: 'ArrowDown',
   },
   {
     small: '▶',
-    shift: null,
+    shift: '▶',
     code: 'ArrowRight',
   },
   {
-    small: 'Win',
+    small: 'Ctrl',
     shift: null,
-    code: 'Win',
+    code: 'ControlRight',
   },
 ];
 
@@ -596,6 +590,11 @@ const ru = [
     code: 'Slash',
   },
   {
+    small: '▲',
+    shift: '▲',
+    code: 'ArrowUp',
+  },
+  {
     small: 'Shift',
     shift: null,
     code: 'ShiftRight',
@@ -629,11 +628,6 @@ const ru = [
     small: '◀',
     shift: '◀',
     code: 'ArrowLeft',
-  },
-  {
-    small: '▲',
-    shift: '▲',
-    code: 'ArrowUp',
   },
   {
     small: '▼',
