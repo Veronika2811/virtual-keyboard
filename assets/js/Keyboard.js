@@ -1,4 +1,3 @@
-// import * as storage from "./storage.js";
 import { set } from './storage.js';
 import create from './createDomNode.js';
 import language from './languages.js';
@@ -23,14 +22,15 @@ export default class Keyboard {
     const subtitle = create(
       'h2',
       'subtitle',
-      'The keyboard was created in the Windows operating system',
+      'The keyboard was created in the MacOs operating system',
     );
 
     const description = create(
       'h3',
       'description',
-      'To switch the language, the combination Ctrl + Alt',
+      'To switch the language, the combination control + option (Ctrl + Alt)',
     );
+    description.style.color = 'red';
 
     const textarea = create('textarea', 'textarea', '', 'Welcome...');
 
@@ -48,7 +48,7 @@ export default class Keyboard {
       this.subtitle,
       this.description,
       this.textarea,
-      keyboard,
+      this.keyboard,
     );
 
     document.body.prepend(this.main);
@@ -77,7 +77,18 @@ export default class Keyboard {
 
     document.addEventListener('keydown', this.handleEvent);
     document.addEventListener('keyup', this.handleEvent);
+    this.keyboard.addEventListener('mousedown', this.mouseHandleEvent);
+    this.keyboard.addEventListener('mouseup', this.mouseHandleEvent);
   }
+
+  mouseHandleEvent = (event) => {
+    event.stopPropagation();
+    const buttonClick = event.target.closest('.key');
+    if (!buttonClick) {
+      return;
+    }
+    this.handleEvent({ code: buttonClick.code, type: event.type });
+  };
 
   handleEvent = (event) => {
     if (event.stopPropagation) {
@@ -89,10 +100,10 @@ export default class Keyboard {
     const { code, type } = event;
     const buttonObject = this.buttons.find((key) => key.code === code);
 
-    if (type.match(/keydown|mousedown/)) {
+    if (type === 'keydown' || type === 'mousedown') {
       buttonObject.letter.classList.add('active');
 
-      if (type.match(/key/)) {
+      if (type === 'keydown') {
         event.preventDefault();
       }
 
@@ -104,7 +115,6 @@ export default class Keyboard {
         this.changeCharactersKeyboard(true);
       }
 
-      // Залипание и изменения регистра
       if (code === 'CapsLock' && !this.isCaps) {
         this.isCaps = true;
         this.changeCharactersKeyboard(true);
@@ -114,7 +124,6 @@ export default class Keyboard {
         buttonObject.letter.classList.remove('active');
       }
 
-      // Смена языка
       if (code === 'ControlLeft' || code === 'ControlRight') {
         this.keyCtrl = true;
       }
@@ -129,7 +138,6 @@ export default class Keyboard {
         this.switchLanguage();
       }
 
-      // Вывод символов в textarea
       if (!this.isCaps) {
         this.printToTextarea(
           buttonObject,
@@ -141,13 +149,12 @@ export default class Keyboard {
           this.shiftKey ? buttonObject.small : buttonObject.shift,
         );
       }
-    } else if (type.match(/keyup|mouseup/)) {
+    } else if (type === 'keyup' || type === 'mouseup') {
       if (code === 'ShiftLeft' || code === 'ShiftRight') {
         this.shiftKey = false;
         this.changeCharactersKeyboard(false);
       }
 
-      // Смена языка
       if (code === 'ControlLeft' || code === 'ControlRight') {
         this.keyCtrl = false;
       }
@@ -155,8 +162,9 @@ export default class Keyboard {
         this.keyAlt = false;
       }
 
-      // Отлипание Caps
-      if (!code.match(/Caps/)) buttonObject.letter.classList.remove('active');
+      if (code !== 'CapsLock') {
+        buttonObject.letter.classList.remove('active');
+      }
     }
   };
 
@@ -229,16 +237,16 @@ export default class Keyboard {
         this.textarea.value = `${leftSide}\n${rightSide}`;
         cursorPosition += 1;
         break;
-      case 'Delete':
-        this.textarea.value = `${leftSide}${rightSide.slice(1)}`;
-        break;
       case 'Backspace':
         this.textarea.value = `${leftSide.slice(0, -1)}${rightSide}`;
         cursorPosition -= 1;
         break;
       case 'Space':
         this.textarea.value = `${leftSide} ${rightSide}`;
-        cursorPosition += 1;
+        break;
+      case 'MetaLeft':
+        break;
+      case 'MetaRight':
         break;
       default:
         break;

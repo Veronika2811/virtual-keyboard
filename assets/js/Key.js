@@ -6,7 +6,7 @@ export default class Key {
     this.shift = shift;
     this.code = code;
     this.isFnKey = Boolean(
-      code.match(/Control|Alt|Shift|Tab|Backspace|Del|Enter|Caps|Win/),
+      code.match(/Control|Alt|Shift|Tab|Backspace|Del|Enter|Caps|Meta/),
     );
 
     const letter = create('div', 'key', small);

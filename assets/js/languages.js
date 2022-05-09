@@ -65,12 +65,12 @@ const en = [
     code: 'Equal',
   },
   {
-    small: 'Backspace',
+    small: 'delete',
     shift: null,
     code: 'Backspace',
   },
   {
-    small: 'Tab',
+    small: 'tab',
     shift: null,
     code: 'Tab',
   },
@@ -140,12 +140,7 @@ const en = [
     code: 'Backslash',
   },
   {
-    small: 'Delete',
-    shift: null,
-    code: 'Delete',
-  },
-  {
-    small: 'CapsLock',
+    small: 'caps lock',
     shift: null,
     code: 'CapsLock',
   },
@@ -205,12 +200,12 @@ const en = [
     code: 'Quote',
   },
   {
-    small: 'Enter',
+    small: 'enter',
     shift: null,
     code: 'Enter',
   },
   {
-    small: 'Shift',
+    small: 'shift',
     shift: null,
     code: 'ShiftLeft',
   },
@@ -270,24 +265,30 @@ const en = [
     code: 'ArrowUp',
   },
   {
-    small: 'Shift',
+    small: 'shift',
     shift: null,
     code: 'ShiftRight',
   },
+
   {
-    small: 'Ctrl',
+    small: 'control',
     shift: null,
     code: 'ControlLeft',
   },
   {
-    small: 'Win',
-    shift: null,
-    code: 'Win',
-  },
-  {
-    small: 'Alt',
+    small: 'option',
     shift: null,
     code: 'AltLeft',
+  },
+  {
+    small: 'command',
+    shift: null,
+    code: 'MetaLeft',
+  },
+  {
+    small: 'command',
+    shift: null,
+    code: 'MetaRight',
   },
   {
     small: ' ',
@@ -295,7 +296,7 @@ const en = [
     code: 'Space',
   },
   {
-    small: 'Alt',
+    small: 'option',
     shift: null,
     code: 'AltRight',
   },
@@ -315,7 +316,7 @@ const en = [
     code: 'ArrowRight',
   },
   {
-    small: 'Ctrl',
+    small: 'control',
     shift: null,
     code: 'ControlRight',
   },
@@ -389,12 +390,12 @@ const ru = [
   },
 
   {
-    small: 'Backspace',
+    small: 'delete',
     shift: null,
     code: 'Backspace',
   },
   {
-    small: 'Tab',
+    small: 'tab',
     shift: null,
     code: 'Tab',
   },
@@ -464,12 +465,7 @@ const ru = [
     code: 'Backslash',
   },
   {
-    small: 'Delete',
-    shift: null,
-    code: 'Delete',
-  },
-  {
-    small: 'CapsLock',
+    small: 'caps lock',
     shift: null,
     code: 'CapsLock',
   },
@@ -529,13 +525,13 @@ const ru = [
     code: 'Quote',
   },
   {
-    small: 'Enter',
+    small: 'enter',
     shift: null,
     code: 'Enter',
   },
 
   {
-    small: 'Shift',
+    small: 'shift',
     shift: null,
     code: 'ShiftLeft',
   },
@@ -595,24 +591,30 @@ const ru = [
     code: 'ArrowUp',
   },
   {
-    small: 'Shift',
+    small: 'shift',
     shift: null,
     code: 'ShiftRight',
   },
+
   {
-    small: 'Ctrl',
+    small: 'control',
     shift: null,
     code: 'ControlLeft',
   },
   {
-    small: 'Win',
-    shift: null,
-    code: 'Win',
-  },
-  {
-    small: 'Alt',
+    small: 'option',
     shift: null,
     code: 'AltLeft',
+  },
+  {
+    small: 'command',
+    shift: null,
+    code: 'MetaLeft',
+  },
+  {
+    small: 'command',
+    shift: null,
+    code: 'MetaRight',
   },
   {
     small: ' ',
@@ -620,7 +622,7 @@ const ru = [
     code: 'Space',
   },
   {
-    small: 'Alt',
+    small: 'option',
     shift: null,
     code: 'AltRight',
   },
@@ -640,7 +642,7 @@ const ru = [
     code: 'ArrowRight',
   },
   {
-    small: 'Ctrl',
+    small: 'control',
     shift: null,
     code: 'ControlRight',
   },

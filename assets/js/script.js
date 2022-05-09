@@ -33,7 +33,6 @@ const rows = [
     'BracketLeft',
     'BracketRight',
     'Backslash',
-    'Delete',
   ],
   [
     'CapsLock',
@@ -67,14 +66,14 @@ const rows = [
   ],
   [
     'ControlLeft',
-    'Win',
     'AltLeft',
+    'MetaLeft',
     'Space',
-    'AltRight',
+    'MetaRight',
     'ArrowLeft',
     'ArrowDown',
     'ArrowRight',
-    'ControlRight',
+    'AltRight',
   ],
 ];
 
