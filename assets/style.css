@@ -168,7 +168,6 @@ body {
 }
 
 .active {
-  background-color: #d7f2f5;
   border: 1px solid #97c6cc;
-  box-shadow: none;
+  box-shadow:inset 1px 1px 10px -1px #79c9d2;
 }
